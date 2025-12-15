@@ -2,11 +2,17 @@ import {
   AppBar,
   Box,
   Button,
+  Card,
+  Chip,
   Container,
   createTheme,
+  Divider,
   IconButton,
+  Stack,
   Toolbar,
+  Typography,
 } from "@mui/material";
+import "./reset.css";
 import MenuIcon from "@mui/icons-material/Menu";
 import { green, purple } from "@mui/material/colors";
 import StoreIcon from "@mui/icons-material/Store";
@@ -21,41 +27,36 @@ export const theme = createTheme({
 
 function App() {
   return (
-    <AppBar position="fixed">
-      <Container
-        fixed
-        sx={{
-          width: "100%",
-          paddingLeft: 0,
-          paddingRight: 0,
-          marginLeft: 0,
-          marginRight: 0,
-        }}
-      >
-        <Toolbar>
-          <Link to="/">
-            <StoreIcon />
-          </Link>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 1 }}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          <Box mr={{ display: "flex", gap: 18 }}>
-            <Button color="inherit" variant="outlined">
-              <Link to="/authorize">Log In</Link>
-            </Button>
-            <Button color="secondary" variant="contained">
-              <Link to="/registration">Sign Up</Link>
-            </Button>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+    <Card variant="outlined" sx={{ maxWidth: 360 }}>
+      <Box sx={{ p: 2 }}>
+        <Stack
+          direction="row"
+          sx={{ justifyContent: "space-between", alignItems: "center" }}
+        >
+          <Typography gutterBottom variant="h5" component="div">
+            Toothbrush
+          </Typography>
+          <Typography gutterBottom variant="h6" component="div">
+            $4.50
+          </Typography>
+        </Stack>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          Pinstriped cornflower blue cotton blouse takes you on a walk to the
+          park or just down the hall.
+        </Typography>
+      </Box>
+      <Divider />
+      <Box sx={{ p: 2 }}>
+        <Typography gutterBottom variant="body2">
+          Select type
+        </Typography>
+        <Stack direction="row" spacing={1}>
+          <Chip color="primary" label="Soft" size="small" />
+          <Chip label="Medium" size="small" />
+          <Chip label="Hard" size="small" />
+        </Stack>
+      </Box>
+    </Card>
   );
 }
 

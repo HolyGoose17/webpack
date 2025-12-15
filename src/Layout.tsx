@@ -130,6 +130,13 @@ export const Layout = () => {
                 </IconButton>
               </Link>
             </Box>
+            <Box>
+              <Link to="/products">
+                <Button color="inherit" variant="contained">
+                  Products
+                </Button>
+              </Link>
+            </Box>
             <Box mr={{ display: "flex", gap: 18 }}>
               <Link to="/authorize">
                 <Button color="inherit" variant="outlined">
