@@ -1,75 +1,65 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { inputBaseClasses } from "@mui/material/InputBase";
 import {
-  FilledInput,
-  FormControl,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
+  Box,
+  Button,
+  Paper,
+  Stack,
   TextField,
+  Typography,
 } from "@mui/material";
-import { MouseEvent, useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Authorize = () => {
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
-
-  const handleMouseUpPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
-
   return (
-    <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-      <TextField
-        id="outlined-suffix-shrink"
-        label="Outlined"
-        variant="outlined"
-        slotProps={{
-          input: {
-            endAdornment: (
-              <InputAdornment
-                position="end"
-                sx={{
-                  opacity: 0,
-                  pointerEvents: "none",
-                  [`[data-shrink=true] ~ .${inputBaseClasses.root} > &`]: {
-                    opacity: 1,
-                  },
-                }}
-              >
-                lbs
-              </InputAdornment>
-            ),
-          },
+    <Box
+      sx={{
+        position: "fixed",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "100vw",
+        maxHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        p: 2,
+      }}
+    >
+      <Paper
+        elevation={6}
+        sx={{
+          p: 4,
+          width: "100%",
+          maxWidth: 400,
+          display: "flex",
+          flexDirection: "column",
+          gap: 3,
+          borderRadius: 3,
         }}
-      />
-      <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-      <OutlinedInput
-        id="outlined-adornment-password"
-        type={showPassword ? "text" : "password"}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton
-              aria-label={
-                showPassword ? "hide the password" : "display the password"
-              }
-              onClick={handleClickShowPassword}
-              onMouseDown={handleMouseDownPassword}
-              onMouseUp={handleMouseUpPassword}
-              edge="end"
-            >
-              {showPassword ? <VisibilityOff /> : <Visibility />}
-            </IconButton>
-          </InputAdornment>
-        }
-        label="Password"
-      />
-    </FormControl>
+      >
+        <Typography variant="h5" textAlign="center" fontWeight={600}>
+          Authorize
+        </Typography>
+
+        <Stack spacing={2}>
+          <TextField label="Login" type="text" variant="outlined" fullWidth />
+
+          <TextField
+            label="Password"
+            type="password"
+            variant="outlined"
+            fullWidth
+          />
+        </Stack>
+
+        <Button variant="contained" size="large" fullWidth>
+          Sign in
+        </Button>
+
+        <Typography variant="body2" textAlign="center">
+          Don't have an account?{" "}
+          <Link to="/registration">Let's registration</Link>
+        </Typography>
+      </Paper>
+    </Box>
   );
 };

@@ -8,7 +8,6 @@ import {
   Toolbar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import "./App.css";
 import { green, purple } from "@mui/material/colors";
 import StoreIcon from "@mui/icons-material/Store";
 import { Link } from "react-router-dom";
@@ -25,7 +24,7 @@ function App() {
     <AppBar position="fixed">
       <Container
         fixed
-        style={{
+        sx={{
           width: "100%",
           paddingLeft: 0,
           paddingRight: 0,
@@ -34,7 +33,7 @@ function App() {
         }}
       >
         <Toolbar>
-          <Link style={{ textDecoration: "none", color: "black" }} to="/">
+          <Link to="/">
             <StoreIcon />
           </Link>
           <IconButton
@@ -47,29 +46,11 @@ function App() {
           </IconButton>
 
           <Box mr={{ display: "flex", gap: 18 }}>
-            <Button
-              color="inherit"
-              variant="outlined"
-              onClick={() => console.log("Авторизация")}
-            >
-              <Link
-                style={{ textDecoration: "none", color: "black" }}
-                to="/authorize"
-              >
-                Log In
-              </Link>
+            <Button color="inherit" variant="outlined">
+              <Link to="/authorize">Log In</Link>
             </Button>
-            <Button
-              color="secondary"
-              variant="contained"
-              onClick={() => console.log("Регистрация")}
-            >
-              <Link
-                style={{ textDecoration: "none", color: "black" }}
-                to="/registration"
-              >
-                Sign Up
-              </Link>
+            <Button color="secondary" variant="contained">
+              <Link to="/registration">Sign Up</Link>
             </Button>
           </Box>
         </Toolbar>

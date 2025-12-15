@@ -4,11 +4,9 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import { useGetProductsQuery } from "../api";
+import { useGetProductsQuery } from "../../api/api";
 
 export const ProductCard = () => {
-  //   const {data, error, isLoading, refetch} = useGetProductsQuery()
-
   return (
     <Card variant="outlined" sx={{ maxWidth: 360 }}>
       <Box sx={{ p: 2 }}>

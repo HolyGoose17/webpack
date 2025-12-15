@@ -2,29 +2,26 @@ import { Box, TextField } from "@mui/material";
 
 export const ForwardPage = () => {
   return (
-    <div
-      style={{
-        width: "100%",
-        marginTop: "300px",
+    <Box
+      component="form"
+      sx={{
+        "& > :not(style)": {
+          m: 1,
+          width: "80%",
+        },
         display: "flex",
         justifyContent: "center",
-        backgroundImage: "",
+        alignItems: "center",
       }}
+      noValidate
+      autoComplete="off"
     >
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { m: 1, width: "100%" },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          id="outlined-basic"
-          label="Find products"
-          variant="outlined"
-        />
-      </Box>
-    </div>
+      <TextField
+        id="outlined-basic"
+        label="Find products"
+        variant="outlined"
+        sx={{ borderRadius: "60px" }}
+      />
+    </Box>
   );
 };

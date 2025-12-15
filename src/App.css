@@ -12,6 +12,7 @@
 
 a, a:link, a:visited  {
     text-decoration: none;
+	color: black;
 }
 
 a:hover  {
@@ -83,4 +84,8 @@ legend {
 
 input[type='file'] {
 	max-width: 100%;
+}
+
+.root{
+	min-height: 100vh;
 }

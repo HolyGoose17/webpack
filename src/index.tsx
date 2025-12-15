@@ -3,12 +3,13 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider, CssBaseline } from "@mui/material";
-
+import "./App.css";
 import { store } from "./store/store";
 import App, { theme } from "./App";
 import { ForwardPage } from "./components/forwardPage/ForwardPage";
 import { Authorize } from "./components/authorize/Authorize";
 import { Layout } from "./Layout";
+import { Registration } from "./components/Registration";
 
 const rootEl = document.getElementById("root");
 if (!rootEl) throw new Error("Root is not found");
@@ -23,7 +24,7 @@ createRoot(rootEl).render(
           <Routes>
             <Route path="/" element={<ForwardPage />} />
             <Route path="/authorize" element={<Authorize />} />
-            <Route path="/registration" element={<Authorize />} />
+            <Route path="/registration" element={<Registration />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
