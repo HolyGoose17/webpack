@@ -21,17 +21,13 @@ export const ProductsList = () => {
       sx={{
         display: "flex",
         flexWrap: "wrap",
+        justifyContent: "center",
         gap: 2,
         p: 2,
       }}
     >
       {data?.map((product) => (
-        <Box
-          key={product.id}
-          sx={{
-            minWidth: 280,
-          }}
-        >
+        <Box key={product.id}>
           <ProductsPage product={product} />
         </Box>
       ))}
