@@ -10,6 +10,8 @@ import { getCart, loadCart } from "../../store/cart";
 import { IProduct } from "../../types/product.types";
 import CardMedia from "@mui/material/CardMedia";
 import { Button } from "@mui/material";
+import DescriptionIcon from "@mui/icons-material/Description";
+import SoapIcon from "@mui/icons-material/Soap";
 
 interface ProductCardProps {
   product: IProduct;
@@ -45,12 +47,12 @@ export const ProductsPage = ({ product }: ProductCardProps) => {
       sx={{
         minWidth: 450,
         maxWidth: 450,
-        minHeight: 500,
+        maxHeight: 500,
       }}
     >
       <CardMedia
         component="img"
-        sx={{ height: 300, objectFit: "contain" }}
+        sx={{ height: 220, objectFit: "contain" }}
         image={product.thumbnail}
         alt={product.title}
       />
@@ -92,15 +94,20 @@ export const ProductsPage = ({ product }: ProductCardProps) => {
           maxHeight: 75,
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "flex-end",
+          alignItems: "center",
           margin: 1,
-          padding: 0,
-          paddingTop: 1.5,
+          padding: 2,
         }}
       >
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
           <Typography gutterBottom variant="body2">
-            Category
+            Tags
           </Typography>
           <Stack direction="row" spacing={1}>
             {product.tags?.slice(0, 2).map((tag, index) => (
@@ -108,7 +115,14 @@ export const ProductsPage = ({ product }: ProductCardProps) => {
             ))}
           </Stack>
         </Box>
-        <Button size="small">Details</Button>
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <Button size="small" title="Description" sx={{ minWidth: 0 }}>
+            <DescriptionIcon />
+          </Button>
+          <Button size="small" title="Take it" sx={{ minWidth: 0 }}>
+            <SoapIcon />
+          </Button>
+        </Box>
       </Box>
     </Card>
   );

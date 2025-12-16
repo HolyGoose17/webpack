@@ -2,6 +2,8 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useGetProductsQuery } from "../api/api";
 import { ProductsPage } from "../components/products/ProductsPage";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Button } from "@mui/material";
 
 export const ProductsList = () => {
   const { data, isLoading, isError } = useGetProductsQuery();
@@ -31,6 +33,19 @@ export const ProductsList = () => {
           <ProductsPage product={product} />
         </Box>
       ))}
+      <Button
+        size="large"
+        sx={{
+          // backgroundColor: "rgba(49, 237, 77, 0.7)",
+          color: "black",
+          position: "fixed",
+          top: "94%",
+          left: "94%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <ShoppingCartIcon />
+      </Button>
     </Box>
   );
 };

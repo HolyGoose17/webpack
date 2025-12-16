@@ -130,7 +130,13 @@ export const Layout = () => {
                 </IconButton>
               </Link>
             </Box>
-            <Box>
+            <Box
+              sx={{
+                position: "absolute",
+                left: "50%",
+                transform: "translateX(-50%)",
+              }}
+            >
               <Link to="/products">
                 <Button color="inherit" variant="contained">
                   Products
@@ -161,7 +167,7 @@ export const Layout = () => {
             boxSizing: "border-box",
           },
         }}
-        variant="persistent"
+        variant="temporary"
         anchor="left"
         open={open}
       >
