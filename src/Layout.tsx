@@ -172,7 +172,7 @@ export const Layout = () => {
         open={open}
       >
         <DrawerHeader sx={{ justifyContent: "space-between" }}>
-          <Typography>Categories</Typography>
+          <Typography>Products</Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
@@ -181,9 +181,11 @@ export const Layout = () => {
             )}
           </IconButton>
         </DrawerHeader>
-
+        <Divider />
+        <Typography m={2}>Category</Typography>
         <Divider />
         <List>
+          <ListItemButton>All</ListItemButton>
           {["Beauty", "Fragrances", "Furniture", "Groceries"].map((text) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>

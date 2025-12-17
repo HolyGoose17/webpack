@@ -4,9 +4,8 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux.hook";
-import { getCart, loadCart } from "../../store/cart";
+import { useAppDispatch } from "../../hooks/redux.hook";
+import { addToCart } from "../../store/cart";
 import { IProduct } from "../../types/product.types";
 import CardMedia from "@mui/material/CardMedia";
 import { Button } from "@mui/material";
@@ -18,28 +17,7 @@ interface ProductCardProps {
 }
 
 export const ProductsPage = ({ product }: ProductCardProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const cart = useAppSelector(getCart);
-
-  const totalAmount =
-    cart?.products.reduce((sum, product) => sum + product.total, 0) || 0;
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  useEffect(() => {
-    dispatch(loadCart());
-  }, [dispatch]);
 
   return (
     <Card
@@ -48,6 +26,10 @@ export const ProductsPage = ({ product }: ProductCardProps) => {
         minWidth: 450,
         maxWidth: 450,
         maxHeight: 500,
+        boxShadow: 1,
+        "&:hover": {
+          boxShadow: 4,
+        },
       }}
     >
       <CardMedia
@@ -119,7 +101,12 @@ export const ProductsPage = ({ product }: ProductCardProps) => {
           <Button size="small" title="Description" sx={{ minWidth: 0 }}>
             <DescriptionIcon />
           </Button>
-          <Button size="small" title="Take it" sx={{ minWidth: 0 }}>
+          <Button
+            onClick={() => dispatch(addToCart(product))}
+            size="small"
+            title="Take it"
+            sx={{ minWidth: 0 }}
+          >
             <SoapIcon />
           </Button>
         </Box>
