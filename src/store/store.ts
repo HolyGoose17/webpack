@@ -1,16 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { productApi } from "../api/api";
+import { ProductApi } from "../components/product/ProductApi";
 import cartReducer from "./cart";
 import productsReducer from "./products";
 
 export const store = configureStore({
   reducer: {
-    [productApi.reducerPath]: productApi.reducer,
+    [ProductApi.reducerPath]: ProductApi.reducer,
     cart: cartReducer,
     products: productsReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(productApi.middleware),
+    getDefaultMiddleware().concat(ProductApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

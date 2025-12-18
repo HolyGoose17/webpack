@@ -41,7 +41,12 @@ export const Authorize = () => {
         </Typography>
 
         <Stack spacing={2}>
-          <TextField label="Login" type="text" variant="outlined" fullWidth />
+          <TextField
+            label="User Name"
+            type="text"
+            variant="outlined"
+            fullWidth
+          />
 
           <TextField
             label="Password"

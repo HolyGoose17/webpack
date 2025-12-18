@@ -12,10 +12,11 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button, Container, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import StoreIcon from "@mui/icons-material/Store";
+import { useGetProductsQuery } from "./components/product/ProductApi";
 
 const drawerWidth = 180;
 
@@ -78,8 +79,15 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export const Layout = () => {
+  const { data, isLoading, isError } = useGetProductsQuery();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+
+  const categories = useMemo(() => {
+    if (!data) return [];
+
+    return Array.from(new Set(data.map((product) => product.category)));
+  }, [data]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -88,6 +96,7 @@ export const Layout = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  console.log(data);
   return (
     <Box>
       <AppBar position="fixed">
@@ -136,13 +145,7 @@ export const Layout = () => {
                 left: "50%",
                 transform: "translateX(-50%)",
               }}
-            >
-              <Link to="/products">
-                <Button color="inherit" variant="contained">
-                  Products
-                </Button>
-              </Link>
-            </Box>
+            ></Box>
             <Box mr={{ display: "flex", gap: 18 }}>
               <Link to="/authorize">
                 <Button color="inherit" variant="outlined">
@@ -172,7 +175,6 @@ export const Layout = () => {
         open={open}
       >
         <DrawerHeader sx={{ justifyContent: "space-between" }}>
-          <Typography>Products</Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
@@ -181,12 +183,11 @@ export const Layout = () => {
             )}
           </IconButton>
         </DrawerHeader>
-        <Divider />
-        <Typography m={2}>Category</Typography>
-        <Divider />
-        <List>
-          <ListItemButton>All</ListItemButton>
-          {["Beauty", "Fragrances", "Furniture", "Groceries"].map((text) => (
+        <Link to="/products" onClick={handleDrawerClose}>
+          <ListItemButton>Products</ListItemButton>
+        </Link>
+        <List sx={{ padding: 1 }}>
+          {categories.map((text) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemText primary={text} />

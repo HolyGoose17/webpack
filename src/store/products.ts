@@ -38,7 +38,6 @@ export const productsSlice = createSlice({
     productsReceived: (state, action) => {
       state.entities = action.payload;
       state.isLoading = false;
-      state.lastFetch = new Date().toISOString();
     },
     productsFailled: (state, action) => {
       state.error = action.payload;
