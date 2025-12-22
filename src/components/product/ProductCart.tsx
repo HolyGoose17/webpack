@@ -1,41 +1,44 @@
 import {
-  Backdrop,
   Badge,
   Box,
   Button,
-  Card,
-  CardContent,
-  Container,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  Divider,
   IconButton,
   Stack,
   Typography,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux.hook";
-import { clearCart, getCart, loadCart, removeFromCart } from "../../store/cart";
-import { useEffect, useState } from "react";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook';
+import { clearCart, getCart, loadCart, removeFromCart } from '../../store/cart';
+import { useEffect, useState } from 'react';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useOrderSubmitMutation } from '../../store/api';
 
 export const ProductCart = () => {
   const dispatch = useAppDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const cart = useAppSelector(getCart);
+  const [orderSubmit] = useOrderSubmitMutation();
 
-  const totalAmount =
-    cart?.products.reduce((sum, product) => sum + product.total, 0) || 0;
+  const totalAmount = cart?.products.reduce((sum, product) => sum + product.total, 0) || 0;
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
+    if (!cart || cart.products.length === 0) return;
     setIsModalOpen(false);
-    // Делаем отправку данных заказа
+
+    try {
+      await orderSubmit(cart).unwrap();
+      dispatch(clearCart());
+    } catch (err) {
+      console.error('Failed to submit the order');
+    }
   };
 
   const handleCancel = () => {
@@ -51,10 +54,10 @@ export const ProductCart = () => {
         size="large"
         onClick={showModal}
         sx={{
-          position: "fixed",
+          position: 'fixed',
           bottom: 24,
           right: 24,
-          bgcolor: "background.paper",
+          bgcolor: 'background.paper',
           boxShadow: 3,
         }}
       >
@@ -63,12 +66,7 @@ export const ProductCart = () => {
         </Badge>
       </IconButton>
 
-      <Dialog
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        fullWidth
-        maxWidth="sm"
-      >
+      <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)} fullWidth maxWidth="sm">
         <DialogTitle>Your order</DialogTitle>
         <DialogContent dividers sx={{ maxHeight: 400 }}>
           {cart && cart.products.length > 0 ? (
@@ -77,9 +75,9 @@ export const ProductCart = () => {
                 <Box
                   key={product.id}
                   sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
                   }}
                 >
                   <Box>
@@ -112,11 +110,7 @@ export const ProductCart = () => {
             <Typography variant="h6">${totalAmount.toFixed(2)}</Typography>
           </Stack>
 
-          <Button
-            color="error"
-            size="small"
-            onClick={() => dispatch(clearCart())}
-          >
+          <Button color="error" size="small" onClick={() => dispatch(clearCart())}>
             Clear cart
           </Button>
         </DialogContent>

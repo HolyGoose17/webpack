@@ -1,10 +1,10 @@
-import { createSlice, type Dispatch } from "@reduxjs/toolkit";
-import { IProduct } from "./products";
-import { RootState } from "./store";
+import { createSlice, type Dispatch } from '@reduxjs/toolkit';
+import { ICartProduct } from '../types/types';
+import { RootState } from './store';
 
-interface ICart {
+export interface ICart {
   id: number;
-  products: IProduct[];
+  products: ICartProduct[];
   total: number;
   discountedTotal: number;
   userId: number;
@@ -25,35 +25,35 @@ const initialState: ICartStore = {
 };
 
 export const cartsSlice = createSlice({
-  name: "carts",
+  name: 'carts',
   initialState,
   reducers: {
     cartsRequested: (state) => {
       state.isLoading = true;
       state.error = null;
     },
+
     cartsReceived: (state, action) => {
       state.entity = action.payload;
       state.isLoading = false;
     },
-    cartsFailled: (state, action) => {
+
+    cartsFailed: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
     },
+
     clearCart: (state) => {
       if (state.entity) state.entity.products = [];
     },
+
     removeFromCart: (state, actions) => {
       if (state.entity) {
         const productId = actions.payload;
-        const product = state.entity.products.find(
-          (prod) => prod.id === productId
-        );
+        const product = state.entity.products.find((prod) => prod.id === productId);
 
         if (product) {
-          state.entity.products = state.entity.products.filter(
-            (prod) => prod.id !== productId
-          );
+          state.entity.products = state.entity.products.filter((prod) => prod.id !== productId);
           state.entity.total -= product.total;
           state.entity.discountedTotal -= product.discountedTotal;
           state.entity.totalProducts -= 1;
@@ -77,7 +77,7 @@ export const cartsSlice = createSlice({
         thumbnail,
       } = action.payload;
 
-      // Если корзина пуста, создаём новую
+      // Create empty cart
       if (!state.entity) {
         state.entity = {
           id: 1,
@@ -90,18 +90,13 @@ export const cartsSlice = createSlice({
         };
       }
 
-      // Проверяем, есть ли товар в корзине
-      const existingProduct = state.entity.products.find(
-        (prod) => prod.id === id
-      );
+      const existingProduct = state.entity.products.find((prod) => prod.id === id);
 
       if (existingProduct) {
         existingProduct.quantity += quantity;
-        existingProduct.total =
-          existingProduct.price * existingProduct.quantity;
+        existingProduct.total = existingProduct.price * existingProduct.quantity;
         existingProduct.discountedTotal =
-          existingProduct.total *
-          (1 - existingProduct.discountPercentage / 100);
+          existingProduct.total * (1 - existingProduct.discountPercentage / 100);
       } else {
         const total = price * quantity;
         const discountedTotal = total * (1 - discountPercentage / 100);
@@ -119,7 +114,7 @@ export const cartsSlice = createSlice({
         state.entity.totalProducts += 1;
       }
 
-      // Обновляем общие значения корзины
+      // Updated products in cart
       state.entity.total += price * quantity;
       state.entity.discountedTotal += price * (1 - discountPercentage / 100);
       state.entity.totalQuantity += quantity;
@@ -128,14 +123,8 @@ export const cartsSlice = createSlice({
 });
 
 const { reducer: cartReducer, actions } = cartsSlice;
-export const {
-  cartsRequested,
-  cartsReceived,
-  cartsFailled,
-  clearCart,
-  removeFromCart,
-  addToCart,
-} = actions;
+export const { cartsRequested, cartsReceived, cartsFailed, clearCart, removeFromCart, addToCart } =
+  actions;
 
 export const loadCart = () => async (dispatch: Dispatch) => {
   dispatch(cartsRequested());

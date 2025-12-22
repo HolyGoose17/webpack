@@ -9,9 +9,10 @@ import {
   Chip,
   Divider,
   CardMedia,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { IProduct } from "../../types/product.types";
+  Rating,
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { IProduct } from '../../types/types';
 
 type Props = {
   open: boolean;
@@ -20,13 +21,12 @@ type Props = {
 };
 
 export const ProductDetails = ({ open, onClose, product }: Props) => {
-  console.log(product);
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
+          display: 'flex',
+          justifyContent: 'space-between',
         }}
       >
         {product.title}
@@ -36,28 +36,35 @@ export const ProductDetails = ({ open, onClose, product }: Props) => {
       </DialogTitle>
 
       <DialogContent dividers>
-        <Stack direction={{ xs: "column", md: "row" }} spacing={4}>
+        <Stack direction={{ xs: 'column', md: 'row' }} spacing={4}>
           <Box
             sx={{
               flex: 1,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
             <CardMedia
               component="img"
-              src={product.images[0]}
+              src={product.thumbnail}
               alt={product.title}
               sx={{
-                maxWidth: "100%",
+                maxWidth: '100%',
                 maxHeight: 350,
-                objectFit: "contain",
+                objectFit: 'contain',
               }}
             />
           </Box>
 
-          <Box sx={{ flex: 1 }}>
+          <Box
+            sx={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-evenly',
+            }}
+          >
             <Typography variant="h5" fontWeight={600} gutterBottom>
               ${product.price}
             </Typography>
@@ -76,7 +83,14 @@ export const ProductDetails = ({ open, onClose, product }: Props) => {
 
             <Divider sx={{ my: 2 }} />
 
-            <Stack direction="row" spacing={2}></Stack>
+            <Stack direction="row" justifyContent="center" spacing={1}>
+              <Rating
+                name="half-rating-read"
+                defaultValue={product.rating}
+                precision={0.5}
+                readOnly
+              />
+            </Stack>
           </Box>
         </Stack>
       </DialogContent>

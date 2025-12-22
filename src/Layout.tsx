@@ -1,31 +1,31 @@
-import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import { useMemo, useState } from "react";
-import { Button, Container, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import StoreIcon from "@mui/icons-material/Store";
-import { useGetProductsQuery } from "./components/product/ProductApi";
+import { styled, useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import { Suspense, useState } from 'react';
+import { Button, CircularProgress, Container } from '@mui/material';
+import { Outlet } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link';
+import StoreIcon from '@mui/icons-material/Store';
+import { CategoriesMenu } from './components/categories/CategoriesMenu';
 
 const drawerWidth = 180;
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   open?: boolean;
 }>(({ theme }) => ({
   flexGrow: 1,
   padding: theme.spacing(3),
-  transition: theme.transitions.create("margin", {
+  transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
@@ -34,7 +34,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
     {
       props: ({ open }) => open,
       style: {
-        transition: theme.transitions.create("margin", {
+        transition: theme.transitions.create('margin', {
           easing: theme.transitions.easing.easeOut,
           duration: theme.transitions.duration.enteringScreen,
         }),
@@ -49,9 +49,9 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps>(({ theme }) => ({
-  transition: theme.transitions.create(["margin", "width"], {
+  transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
@@ -61,7 +61,7 @@ const AppBar = styled(MuiAppBar, {
       style: {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: `${drawerWidth}px`,
-        transition: theme.transitions.create(["margin", "width"], {
+        transition: theme.transitions.create(['margin', 'width'], {
           easing: theme.transitions.easing.easeOut,
           duration: theme.transitions.duration.enteringScreen,
         }),
@@ -70,24 +70,17 @@ const AppBar = styled(MuiAppBar, {
   ],
 }));
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
   padding: theme.spacing(0, 1),
   ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
+  justifyContent: 'flex-end',
 }));
 
 export const Layout = () => {
-  const { data, isLoading, isError } = useGetProductsQuery();
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
-
-  const categories = useMemo(() => {
-    if (!data) return [];
-
-    return Array.from(new Set(data.map((product) => product.category)));
-  }, [data]);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -96,29 +89,26 @@ export const Layout = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  console.log(data);
   return (
     <Box>
       <AppBar position="fixed">
         <Container
           fixed
           sx={{
-            maxWidth: "100% !important",
-            width: "100%",
-            paddingLeft: 0,
-            paddingRight: 0,
-            marginLeft: 0,
-            marginRight: 0,
+            maxWidth: '100% !important',
+            width: '100%',
+            px: 0,
+            mx: 0,
           }}
         >
           <Toolbar
             sx={{
-              justifyContent: "space-between",
-              alignItems: "center",
-              maxWidth: "100%",
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              maxWidth: '100%',
             }}
           >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
@@ -128,12 +118,12 @@ export const Layout = () => {
                   {
                     mr: 2,
                   },
-                  open && { display: "none" },
+                  open && { display: 'none' },
                 ]}
               >
                 <MenuIcon />
               </IconButton>
-              <Link to="/">
+              <Link component={RouterLink} to="">
                 <IconButton>
                   <StoreIcon />
                 </IconButton>
@@ -141,18 +131,18 @@ export const Layout = () => {
             </Box>
             <Box
               sx={{
-                position: "absolute",
-                left: "50%",
-                transform: "translateX(-50%)",
+                position: 'absolute',
+                left: '50%',
+                transform: 'translateX(-50%)',
               }}
             ></Box>
-            <Box mr={{ display: "flex", gap: 18 }}>
-              <Link to="/authorize">
+            <Box mr={{ display: 'flex', gap: 18 }}>
+              <Link component={RouterLink} to="authorize">
                 <Button color="inherit" variant="outlined">
                   Log In
                 </Button>
               </Link>
-              <Link to="/registration">
+              <Link component={RouterLink} to="registration">
                 <Button color="secondary" variant="contained">
                   Sign Up
                 </Button>
@@ -165,40 +155,39 @@ export const Layout = () => {
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          "& .MuiDrawer-paper": {
+          '& .MuiDrawer-paper': {
             width: drawerWidth,
-            boxSizing: "border-box",
+            boxSizing: 'border-box',
           },
         }}
         variant="temporary"
         anchor="left"
         open={open}
       >
-        <DrawerHeader sx={{ justifyContent: "space-between" }}>
+        <DrawerHeader sx={{ justifyContent: 'space-between' }}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
-        <Link to="/products" onClick={handleDrawerClose}>
-          <ListItemButton>Products</ListItemButton>
+        <Link component={RouterLink} to="products" onClick={handleDrawerClose}>
+          <ListItemButton>
+            <ListItemText>Products</ListItemText>
+          </ListItemButton>
         </Link>
-        <List sx={{ padding: 1 }}>
-          {categories.map((text) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+        <CategoriesMenu />
         <Divider />
       </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
+      <Main open={open} sx={{ mx: 0, px: 0 }}>
+        <Suspense
+          fallback={
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+              <CircularProgress />
+            </Box>
+          }
+        >
+          {' '}
+          <Outlet />
+        </Suspense>
       </Main>
     </Box>
   );
