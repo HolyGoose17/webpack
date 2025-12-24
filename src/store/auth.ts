@@ -6,7 +6,6 @@ export interface IUser {
   email: string;
   firstName: string;
   lastName: string;
-  // password: string;
 }
 
 interface IAuthState {
@@ -17,7 +16,6 @@ interface IAuthState {
 
 const initialState: IAuthState = {
   user: null,
-  // token: localStorage.getItem('token'),
   token: null,
   isAuth: !!localStorage.getItem('token'),
 };

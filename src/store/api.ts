@@ -54,10 +54,6 @@ export const api = createApi({
       invalidatesTags: ['Products'],
     }),
 
-    // getCategories: build.query<string[], void>({
-    //   query: () => 'products/categories',
-    // }),
-
     // Cart
     orderSubmit: build.mutation<void, ICart>({
       query: (order) => ({
@@ -85,5 +81,4 @@ export const {
   useDeleteProductMutation,
   useLoginMutation,
   useOrderSubmitMutation,
-  // useGetCategoriesQuery
 } = api;

@@ -27,13 +27,19 @@ export interface IProductResponse {
   total: number;
 }
 
+export interface IProps {
+  open: boolean;
+  onClose: () => void;
+  product: IProduct;
+}
+
 export interface ICartProduct extends Omit<IProduct, 'category' | 'tags' | 'rating'> {
   category?: string;
   tags?: string;
   rating?: number;
 }
 
-export interface IProps {
+export interface IProductCategories {
   categories: string[];
   selectedCategory: string | null;
   onSelect: (category: string | null) => void;

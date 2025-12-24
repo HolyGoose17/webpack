@@ -18,7 +18,7 @@ export const theme = createTheme({
   typography: {
     fontFamily: 'ui-monospace',
     h1: {
-      fontSize: '1.5rem',
+      fontSize: '1rem',
       fontWeight: 'bold',
     },
     body2: {

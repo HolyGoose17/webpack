@@ -14,8 +14,8 @@ export default [
     files: ['**/*.{ts,tsx}'],
     plugins: {
       '@typescript-eslint': tseslint.plugin,
-      react: eslintReact,
-      'react-hooks': eslintReactHooks,
+      react: react,
+      'react-hooks': reactHooks,
       'react-refresh': eslintReactRefresh,
       'simple-import-sort': eslintSimpleSort,
       prettier: prettierPlugin,
@@ -32,7 +32,7 @@ export default [
 
       'react/react-in-jsx-scope': 'off',
 
-      'react-hooks/exhaustive-deps': 'warning',
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
 

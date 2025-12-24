@@ -1,7 +1,7 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { IProps } from '../../types/types';
+import { IProductCategories } from '../../types/types';
 
-export const CategoryFilter = ({ categories, selectedCategory, onSelect }: IProps) => {
+export const CategoryFilter = ({ categories, selectedCategory, onSelect }: IProductCategories) => {
   return (
     <Box sx={{ mb: 4 }}>
       <Typography variant="h6" sx={{ mb: 2, textAlign: 'center' }}>

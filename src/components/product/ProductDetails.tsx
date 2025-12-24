@@ -12,15 +12,9 @@ import {
   Rating,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { IProduct } from '../../types/types';
+import { IProps } from '../../types/types';
 
-type Props = {
-  open: boolean;
-  onClose: () => void;
-  product: IProduct;
-};
-
-export const ProductDetails = ({ open, onClose, product }: Props) => {
+export const ProductDetails = ({ open, onClose, product }: IProps) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle
