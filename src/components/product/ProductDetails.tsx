@@ -29,7 +29,7 @@ export const ProductDetails = ({ open, onClose, product }: Props) => {
           justifyContent: 'space-between',
         }}
       >
-        {product.title}
+        <Typography variant="h1"> {product.title}</Typography>
         <IconButton onClick={onClose}>
           <CloseIcon />
         </IconButton>
@@ -76,7 +76,7 @@ export const ProductDetails = ({ open, onClose, product }: Props) => {
             {product.tags && (
               <Stack direction="row" spacing={1} mb={2}>
                 {product.tags.map((tag) => (
-                  <Chip key={tag} label={tag} size="small" />
+                  <Chip key={tag} label={tag} size="small" color="success" />
                 ))}
               </Stack>
             )}

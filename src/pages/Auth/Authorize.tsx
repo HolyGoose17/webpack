@@ -1,8 +1,43 @@
-import { Box, Button, Paper, Stack, TextField, Typography } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
+import { Box, Button, Paper, Stack, TextField, Typography } from '@mui/material';
+import { useAppDispatch } from '../../hooks/redux.hook';
+import { useLoginMutation } from '../../store/api';
+import { setCredentials } from '../../store/auth';
+import { useState } from 'react';
 
 const Authorize = () => {
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useAppDispatch();
+  const [auth, { isLoading }] = useLoginMutation();
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    try {
+      const result = await auth({
+        username: login,
+        password,
+      }).unwrap();
+
+      navigate('/');
+
+      dispatch(
+        setCredentials({
+          user: {
+            id: result.id,
+            username: result.username,
+            email: result.email,
+            firstName: result.firstName,
+            lastName: result.lastName,
+          },
+          token: result.token,
+        })
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <Box
       sx={{
@@ -20,6 +55,7 @@ const Authorize = () => {
     >
       <Paper
         elevation={6}
+        onSubmit={handleSubmit}
         sx={{
           p: 4,
           width: '100%',
@@ -35,16 +71,32 @@ const Authorize = () => {
         </Typography>
 
         <Stack spacing={2}>
-          <TextField label="User Name" type="text" variant="outlined" fullWidth />
+          <TextField
+            label="User Name"
+            type="text"
+            variant="outlined"
+            fullWidth
+            value={login}
+            onChange={(event) => setLogin(event.target.value)}
+          />
 
-          <TextField label="Password" type="password" variant="outlined" fullWidth />
+          <TextField
+            label="Password"
+            type="password"
+            variant="outlined"
+            fullWidth
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
         </Stack>
 
         <Button
+          type="submit"
           variant="contained"
           size="large"
           fullWidth
-          onClick={() => console.log('User is logged')}
+          onClick={handleSubmit}
+          disabled={isLoading}
         >
           Sign in
         </Button>

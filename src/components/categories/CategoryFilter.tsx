@@ -1,0 +1,31 @@
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { IProps } from '../../types/types';
+
+export const CategoryFilter = ({ categories, selectedCategory, onSelect }: IProps) => {
+  return (
+    <Box sx={{ mb: 4 }}>
+      <Typography variant="h6" sx={{ mb: 2, textAlign: 'center' }}>
+        Categories
+      </Typography>
+
+      <Stack direction="row" spacing={1} justifyContent="center" flexWrap="wrap" useFlexGap>
+        <Button
+          variant={selectedCategory === null ? 'contained' : 'outlined'}
+          onClick={() => onSelect(null)}
+        >
+          All
+        </Button>
+
+        {categories.map((category) => (
+          <Button
+            key={category}
+            variant={selectedCategory === category ? 'contained' : 'outlined'}
+            onClick={() => onSelect(category)}
+          >
+            {category}
+          </Button>
+        ))}
+      </Stack>
+    </Box>
+  );
+};

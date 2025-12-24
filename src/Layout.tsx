@@ -11,12 +11,13 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { Suspense, useState } from 'react';
-import { Button, CircularProgress, Container } from '@mui/material';
+import { Button, CircularProgress, Container, Typography } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import StoreIcon from '@mui/icons-material/Store';
-import { CategoriesMenu } from './components/categories/CategoriesMenu';
+import { useAppSelector, useAppDispatch } from './hooks/redux.hook';
+import { logout } from './store/auth';
 
 const drawerWidth = 180;
 
@@ -79,8 +80,10 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export const Layout = () => {
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const [open, setOpen] = useState<boolean>(false);
+  const { isAuth, user } = useAppSelector((state) => state.auth);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -88,6 +91,10 @@ export const Layout = () => {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
   return (
     <Box>
@@ -136,18 +143,27 @@ export const Layout = () => {
                 transform: 'translateX(-50%)',
               }}
             ></Box>
-            <Box mr={{ display: 'flex', gap: 18 }}>
-              <Link component={RouterLink} to="authorize">
-                <Button color="inherit" variant="outlined">
-                  Log In
+            {!isAuth && !user ? (
+              <Box mr={{ display: 'flex', gap: 18 }}>
+                <Link component={RouterLink} to="authorize">
+                  <Button color="inherit" variant="outlined">
+                    Log In
+                  </Button>
+                </Link>
+                <Link component={RouterLink} to="registration">
+                  <Button color="secondary" variant="contained">
+                    Sign Up
+                  </Button>
+                </Link>
+              </Box>
+            ) : (
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <Typography variant="body1">Hello: {user?.username}</Typography>
+                <Button color="secondary" variant="contained" onClick={handleLogout}>
+                  Sign Out
                 </Button>
-              </Link>
-              <Link component={RouterLink} to="registration">
-                <Button color="secondary" variant="contained">
-                  Sign Up
-                </Button>
-              </Link>
-            </Box>
+              </Box>
+            )}
           </Toolbar>
         </Container>
       </AppBar>
@@ -174,7 +190,6 @@ export const Layout = () => {
             <ListItemText>Products</ListItemText>
           </ListItemButton>
         </Link>
-        <CategoriesMenu />
         <Divider />
       </Drawer>
       <Main open={open} sx={{ mx: 0, px: 0 }}>

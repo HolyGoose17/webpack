@@ -37,7 +37,7 @@ export const ProductCart = () => {
       await orderSubmit(cart).unwrap();
       dispatch(clearCart());
     } catch (err) {
-      console.error('Failed to submit the order');
+      console.error('Failed to submit the order', err);
     }
   };
 
@@ -47,7 +47,8 @@ export const ProductCart = () => {
 
   useEffect(() => {
     dispatch(loadCart());
-  }, [dispatch]);
+  }, []);
+
   return (
     <>
       <IconButton
@@ -81,7 +82,7 @@ export const ProductCart = () => {
                   }}
                 >
                   <Box>
-                    <Typography fontWeight={500}>{product.title}</Typography>
+                    <Typography variant="h1">{product.title}</Typography>
                     <Typography variant="body2" color="text.secondary">
                       ${product.price} × {product.quantity}
                     </Typography>

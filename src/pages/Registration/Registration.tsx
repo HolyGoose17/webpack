@@ -35,6 +35,7 @@ const Registration = () => {
 
         <Stack spacing={2}>
           <TextField label="Login" type="text" variant="outlined" fullWidth />
+
           <TextField label="Email" type="email" variant="outlined" fullWidth />
 
           <TextField label="Phone" type="text" variant="outlined" fullWidth />

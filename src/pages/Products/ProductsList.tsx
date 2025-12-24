@@ -1,45 +1,63 @@
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import { ProductsPage } from '../../components/product/ProductsPage';
+import { ProductsPage } from '../../components/product/ProductsCard';
 import { ProductCart } from '../../components/product/ProductCart';
 import { useGetProductsQuery } from '../../store/api';
+import { useState } from 'react';
+import { CategoryFilter } from '../../components/categories/CategoryFilter';
 
 const ProductsList = () => {
-  const { data, isLoading, isError } = useGetProductsQuery();
+  const { data: products, isLoading, isError } = useGetProductsQuery();
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const categories = Array.from(new Set(products?.map((prod) => prod.category)));
+
+  const filteredProducts = selectedCategory
+    ? products?.filter((prod) => prod.category === selectedCategory)
+    : products;
 
   if (isError) {
     return <Box sx={{ mt: 4 }}>Error loading products</Box>;
   }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        gap: 2,
-        p: 2,
-      }}
-    >
+    <Box sx={{ paddingTop: 8 }}>
       {isLoading ? (
         <Box
           sx={{
             width: '100%',
-            height: '100%',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
+            mt: 4,
           }}
         >
           <CircularProgress />
         </Box>
       ) : (
-        data?.map((product) => (
-          <Box key={product.id} sx={{ marginTop: 6 }}>
-            <ProductsPage product={product} />
+        <>
+          <CategoryFilter
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onSelect={setSelectedCategory}
+          />
+
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: 2,
+            }}
+          >
+            {filteredProducts?.map((product) => (
+              <Box key={product.id}>
+                <ProductsPage product={product} />
+              </Box>
+            ))}
           </Box>
-        ))
+        </>
       )}
+
       <ProductCart />
     </Box>
   );

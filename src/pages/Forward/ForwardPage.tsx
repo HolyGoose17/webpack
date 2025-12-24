@@ -1,6 +1,6 @@
 import { Box, TextField } from '@mui/material';
 
-const ForwardPage = () => {
+const ForwardCard = () => {
   return (
     <Box
       component="form"
@@ -27,4 +27,4 @@ const ForwardPage = () => {
   );
 };
 
-export default ForwardPage;
+export default ForwardCard;

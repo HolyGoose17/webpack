@@ -1,19 +1,22 @@
-// store/api.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {
-  IProduct,
-  IProductResponse,
-  IProductUpdate,
-  IProductInput,
-  ICartProduct,
-} from '../types/types';
+import { IProduct, IProductResponse, IProductUpdate, IProductInput } from '../types/types';
 import { IUser } from './auth';
 import { ICart } from './cart';
+import { RootState } from './store';
 
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BACKEND_URL,
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).auth.token;
+
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+      }
+
+      return headers;
+    },
   }),
   tagTypes: ['Products', 'Auth'],
   endpoints: (build) => ({
@@ -51,6 +54,11 @@ export const api = createApi({
       invalidatesTags: ['Products'],
     }),
 
+    // getCategories: build.query<string[], void>({
+    //   query: () => 'products/categories',
+    // }),
+
+    // Cart
     orderSubmit: build.mutation<void, ICart>({
       query: (order) => ({
         url: '/order',
@@ -60,9 +68,9 @@ export const api = createApi({
     }),
 
     // Authorize
-    login: build.mutation<{ user: IUser; token: string }, { username: string; password: string }>({
+    login: build.mutation<IUser & { token: string }, { username: string; password: string }>({
       query: (body) => ({
-        url: '/users',
+        url: '/auth/login',
         method: 'POST',
         body,
       }),
@@ -77,4 +85,5 @@ export const {
   useDeleteProductMutation,
   useLoginMutation,
   useOrderSubmitMutation,
+  // useGetCategoriesQuery
 } = api;
