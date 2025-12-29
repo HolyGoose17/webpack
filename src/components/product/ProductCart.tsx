@@ -1,17 +1,15 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import {
-  Badge,
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  Stack,
-  Typography,
-} from '@mui/material';
+import Badge from '@mui/material/Badge';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook';
@@ -48,7 +46,7 @@ export const ProductCart = () => {
 
   useEffect(() => {
     dispatch(loadCart());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { IProduct, IProductInput, IProductResponse, IProductUpdate } from '../types/types';
+import { IProduct, IProductResponse } from '../types/types';
 import { IUser } from './auth';
 import { ICart } from './cart';
 import { RootState } from './store';
@@ -27,6 +27,7 @@ export const api = createApi({
       providesTags: ['Products'],
       keepUnusedDataFor: 600,
     }),
+
     getProductsByCategory: build.query<IProduct[], string | void>({
       query: (category) => (category ? `products/category/${category}` : 'products'),
       transformResponse: (response: IProductResponse) => response.products,
@@ -34,30 +35,8 @@ export const api = createApi({
       keepUnusedDataFor: 600,
     }),
 
-    addProduct: build.mutation<IProduct, IProductInput>({
-      query: (newProduct) => ({
-        url: `/products/add`,
-        method: 'POST',
-        body: newProduct,
-      }),
-      invalidatesTags: ['Products'],
-    }),
-
-    updateProduct: build.mutation<IProduct, IProductUpdate>({
-      query: ({ id, product }) => ({
-        url: `/products/${id}`,
-        method: 'PUT',
-        body: product,
-      }),
-      invalidatesTags: ['Products'],
-    }),
-
-    deleteProduct: build.mutation<IProduct, number>({
-      query: (id) => ({
-        url: `/products/${id}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['Products'],
+    getProductById: build.query<IProduct, string>({
+      query: (id) => `products/${id}`,
     }),
 
     // Cart
@@ -83,9 +62,7 @@ export const api = createApi({
 export const {
   useGetAllProductsQuery,
   useGetProductsByCategoryQuery,
-  useAddProductMutation,
-  useUpdateProductMutation,
-  useDeleteProductMutation,
   useLoginMutation,
   useOrderSubmitMutation,
+  useGetProductByIdQuery,
 } = api;

@@ -1,19 +1,18 @@
 import DescriptionIcon from '@mui/icons-material/Description';
 import SoapIcon from '@mui/icons-material/Soap';
-import { Button } from '@mui/material';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '../../hooks/redux.hook';
 import { addToCart } from '../../store/cart';
 import { IProduct } from '../../types/types';
-import { ProductDetails } from './ProductDetails';
 
 interface ProductCardProps {
   product: IProduct;
@@ -21,7 +20,8 @@ interface ProductCardProps {
 
 export const ProductsCard = ({ product }: ProductCardProps) => {
   const dispatch = useAppDispatch();
-  const [open, setOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -42,7 +42,7 @@ export const ProductsCard = ({ product }: ProductCardProps) => {
           sx={{ height: 220, objectFit: 'contain' }}
           image={product.thumbnail}
           alt={product.title}
-          onClick={() => setOpen(true)}
+          onClick={() => navigate(`/products/${product.id}`)}
         />
         <Box sx={{ p: 2 }}>
           <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
@@ -90,7 +90,7 @@ export const ProductsCard = ({ product }: ProductCardProps) => {
 
           <Box sx={{ display: 'flex', gap: 1 }}>
             <Button
-              onClick={() => setOpen(true)}
+              onClick={() => navigate(`/products/${product.id}`)}
               size="small"
               title="Description"
               sx={{ minWidth: 0 }}
@@ -108,8 +108,6 @@ export const ProductsCard = ({ product }: ProductCardProps) => {
           </Box>
         </Box>
       </Card>
-
-      <ProductDetails open={open} onClose={() => setOpen(false)} product={product} />
     </>
   );
 };

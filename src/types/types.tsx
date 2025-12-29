@@ -13,15 +13,6 @@ export interface IProduct {
   rating: number;
 }
 
-export interface IProductInput extends Omit<IProduct, 'id'> {
-  _?: never;
-}
-
-export interface IProductUpdate {
-  id: number;
-  product: Partial<IProduct>;
-}
-
 export interface IProductResponse {
   limit: number;
   products: IProduct[];

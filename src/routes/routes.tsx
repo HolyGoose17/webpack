@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
+import { ProductDetails } from '../components/product/ProductDetails';
 import { Layout } from '../Layout';
 
 const LazyForwardPage = lazy(() => import('../pages/Forward/ForwardPage'));
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
       {
         path: 'products',
         element: <LazyProductsList />,
+      },
+      {
+        path: 'products/:id',
+        element: <ProductDetails />,
       },
       {
         path: 'authorize',
