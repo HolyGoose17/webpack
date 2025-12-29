@@ -11,22 +11,26 @@ export interface IUser {
 interface IAuthState {
   user: IUser | null;
   token: string | null;
+
   isAuth: boolean;
 }
 
 const initialState: IAuthState = {
   user: null,
+
   token: null,
   isAuth: !!localStorage.getItem('token'),
 };
 
 const authSlice = createSlice({
   name: 'auth',
+
   initialState,
   reducers: {
     setCredentials: (state, action: PayloadAction<{ user: IUser; token: string }>) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
+
       state.isAuth = true;
       localStorage.setItem('token', action.payload.token);
     },

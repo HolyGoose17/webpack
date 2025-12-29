@@ -1,3 +1,5 @@
+import DeleteIcon from '@mui/icons-material/Delete';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {
   Badge,
   Box,
@@ -10,12 +12,11 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook';
-import { clearCart, getCart, loadCart, removeFromCart } from '../../store/cart';
 import { useEffect, useState } from 'react';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook';
 import { useOrderSubmitMutation } from '../../store/api';
+import { clearCart, getCart, loadCart, removeFromCart } from '../../store/cart';
 
 export const ProductCart = () => {
   const dispatch = useAppDispatch();

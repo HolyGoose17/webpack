@@ -1,6 +1,7 @@
-import { Layout } from '../Layout';
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+
+import { Layout } from '../Layout';
 
 const LazyForwardPage = lazy(() => import('../pages/Forward/ForwardPage'));
 const LazyProductsList = lazy(() => import('../pages/Products/ProductsList'));

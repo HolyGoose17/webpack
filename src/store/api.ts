@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IProduct, IProductResponse, IProductUpdate, IProductInput } from '../types/types';
+
+import { IProduct, IProductInput, IProductResponse, IProductUpdate } from '../types/types';
 import { IUser } from './auth';
 import { ICart } from './cart';
 import { RootState } from './store';
@@ -10,7 +11,6 @@ export const api = createApi({
     baseUrl: process.env.REACT_APP_BACKEND_URL,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
-
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
       }

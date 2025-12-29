@@ -1,10 +1,11 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import Link from '@mui/material/Link';
 import { Box, Button, Paper, Stack, TextField, Typography } from '@mui/material';
+import Link from '@mui/material/Link';
+import { useState } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+
 import { useAppDispatch } from '../../hooks/redux.hook';
 import { useLoginMutation } from '../../store/api';
 import { setCredentials } from '../../store/auth';
-import { useState } from 'react';
 
 const Authorize = () => {
   const [login, setLogin] = useState('');

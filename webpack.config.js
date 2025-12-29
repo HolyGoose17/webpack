@@ -17,17 +17,12 @@ module.exports = {
       { test: /\.svg$/, use: 'svg-inline-loader' },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
       {
-        test: /\.tsx?$/,
-        loader: isProd ? 'esbuild-loader' : 'ts-loader',
-        exclude: /node_modules/,
-        options: isProd
-          ? {
-              loader: {
-                loader: 'tsx',
-                target: 'es2015',
-              },
-            }
-          : { transpileOnly: true },
+        test: /\.[jt]sx?$/,
+      loader: isProd ? 'esbuild-loader' : 'ts-loader',
+      exclude: /node_modules/,
+      options: isProd
+        ? { loader: 'tsx', target: 'es2015' }
+        : { transpileOnly: true },
       },
       { test: /\.(png|jpe?g|gif|webp|svg)$/i, type: 'asset/resource' },
     ],
@@ -62,7 +57,7 @@ module.exports = {
       : []),
   ],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   devServer: {
     static: path.resolve(__dirname, 'dist'),

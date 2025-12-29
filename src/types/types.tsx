@@ -13,7 +13,9 @@ export interface IProduct {
   rating: number;
 }
 
-export interface IProductInput extends Omit<IProduct, 'id'> {}
+export interface IProductInput extends Omit<IProduct, 'id'> {
+  _?: never;
+}
 
 export interface IProductUpdate {
   id: number;

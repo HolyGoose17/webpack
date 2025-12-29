@@ -1,24 +1,25 @@
-import Card from '@mui/material/Card';
+import DescriptionIcon from '@mui/icons-material/Description';
+import SoapIcon from '@mui/icons-material/Soap';
+import { Button } from '@mui/material';
 import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useState } from 'react';
+
 import { useAppDispatch } from '../../hooks/redux.hook';
 import { addToCart } from '../../store/cart';
 import { IProduct } from '../../types/types';
-import CardMedia from '@mui/material/CardMedia';
-import { Button } from '@mui/material';
-import DescriptionIcon from '@mui/icons-material/Description';
-import SoapIcon from '@mui/icons-material/Soap';
-import { useState } from 'react';
 import { ProductDetails } from './ProductDetails';
 
 interface ProductCardProps {
   product: IProduct;
 }
 
-export const ProductsPage = ({ product }: ProductCardProps) => {
+export const ProductsCard = ({ product }: ProductCardProps) => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
 

@@ -1,22 +1,23 @@
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import MenuIcon from '@mui/icons-material/Menu';
+import StoreIcon from '@mui/icons-material/Store';
+import { Button, CircularProgress, Container, Typography } from '@mui/material';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import { styled, useTheme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
 import { Suspense, useState } from 'react';
-import { Button, CircularProgress, Container, Typography } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
-import Link from '@mui/material/Link';
-import StoreIcon from '@mui/icons-material/Store';
-import { useAppSelector, useAppDispatch } from './hooks/redux.hook';
+
+import { useAppDispatch, useAppSelector } from './hooks/redux.hook';
 import { logout } from './store/auth';
 
 const drawerWidth = 180;

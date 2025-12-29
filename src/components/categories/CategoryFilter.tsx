@@ -1,4 +1,5 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
+
 import { IProductCategories } from '../../types/types';
 
 export const CategoryFilter = ({ categories, selectedCategory, onSelect }: IProductCategories) => {

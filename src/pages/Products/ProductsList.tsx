@@ -1,24 +1,24 @@
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import { ProductsPage } from '../../components/product/ProductsCard';
-import { ProductCart } from '../../components/product/ProductCart';
-import { useGetAllProductsQuery, useGetProductsByCategoryQuery } from '../../store/api';
 import { useState } from 'react';
+
 import { CategoryFilter } from '../../components/categories/CategoryFilter';
+import { ProductCart } from '../../components/product/ProductCart';
+import { ProductsCard } from '../../components/product/ProductsCard';
+import { useGetAllProductsQuery, useGetProductsByCategoryQuery } from '../../store/api';
 
 const ProductsList = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  var {
+  const {
     data: products,
     isLoading: loadProducts,
+
     isError: errorProducts,
   } = useGetAllProductsQuery();
-  const {
-    data: productsByCategory,
-    isLoading: loadProductsByCategory,
-    isError,
-  } = useGetProductsByCategoryQuery(selectedCategory || undefined);
+  const { data: productsByCategory, isLoading } = useGetProductsByCategoryQuery(
+    selectedCategory || undefined
+  );
   const categories = Array.from(new Set(products?.map((prod) => prod.category)));
 
   if (errorProducts) {
@@ -27,7 +27,7 @@ const ProductsList = () => {
 
   return (
     <Box sx={{ paddingTop: 8 }}>
-      {loadProducts ? (
+      {loadProducts || isLoading ? (
         <Box
           sx={{
             width: '100%',
@@ -56,7 +56,7 @@ const ProductsList = () => {
           >
             {productsByCategory?.map((product) => (
               <Box key={product.id}>
-                <ProductsPage product={product} />
+                <ProductsCard product={product} />
               </Box>
             ))}
           </Box>

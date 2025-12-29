@@ -1,17 +1,18 @@
+import CloseIcon from '@mui/icons-material/Close';
 import {
+  Box,
+  CardMedia,
+  Chip,
   Dialog,
   DialogContent,
   DialogTitle,
-  IconButton,
-  Typography,
-  Box,
-  Stack,
-  Chip,
   Divider,
-  CardMedia,
+  IconButton,
   Rating,
+  Stack,
+  Typography,
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+
 import { IProps } from '../../types/types';
 
 export const ProductDetails = ({ open, onClose, product }: IProps) => {

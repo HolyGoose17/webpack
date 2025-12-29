@@ -1,4 +1,5 @@
 import { createSlice, type Dispatch } from '@reduxjs/toolkit';
+
 import { ICartProduct } from '../types/types';
 import { RootState } from './store';
 
