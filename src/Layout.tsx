@@ -132,11 +132,11 @@ export const Layout = () => {
                   open && { display: 'none' },
                 ]}
               >
-                <MenuIcon />
+                <MenuIcon aria-label="Button menu" />
               </IconButton>
               <Link component={RouterLink} to="">
-                <IconButton>
-                  <StoreIcon />
+                <IconButton aria-label="Store button">
+                  <StoreIcon aria-label="Go to the store" />
                 </IconButton>
               </Link>
             </Box>
@@ -186,7 +186,11 @@ export const Layout = () => {
       >
         <DrawerHeader sx={{ justifyContent: 'space-between' }}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'ltr' ? (
+              <ChevronLeftIcon aria-label="Switch to the left" />
+            ) : (
+              <ChevronRightIcon aria-label="Switch to the right" />
+            )}
           </IconButton>
         </DrawerHeader>
         <Link component={RouterLink} to="products" onClick={handleDrawerClose}>

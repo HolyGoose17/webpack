@@ -14,7 +14,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useGetProductByIdQuery } from '../../store/api';
 
-export const ProductDetails = () => {
+const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data, isLoading } = useGetProductByIdQuery(id!);
@@ -68,10 +68,11 @@ export const ProductDetails = () => {
 
             <CardContent sx={{ flex: 1, position: 'relative', p: 4 }}>
               <IconButton
+                aria-label="Close details"
                 onClick={() => navigate('/products')}
                 sx={{ position: 'absolute', top: 16, right: 16 }}
               >
-                <CloseIcon />
+                <CloseIcon aria-label="Close details card" />
               </IconButton>
 
               <Typography variant="h4" fontWeight={700} gutterBottom>
@@ -112,3 +113,5 @@ export const ProductDetails = () => {
     </Box>
   );
 };
+
+export default ProductDetails;

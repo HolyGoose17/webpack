@@ -1,11 +1,11 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
-import { ProductDetails } from '../components/product/ProductDetails';
 import { Layout } from '../Layout';
 
 const LazyForwardPage = lazy(() => import('../pages/Forward/ForwardPage'));
 const LazyProductsList = lazy(() => import('../pages/Products/ProductsList'));
+const LazyProductDetails = lazy(() => import('../pages/Products/ProductDetails'));
 const LazyAuthorize = lazy(() => import('../pages/Auth/Authorize'));
 const LazyRegistration = lazy(() => import('../pages/Registration/Registration'));
 
@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'products/:id',
-        element: <ProductDetails />,
+        element: <LazyProductDetails />,
       },
       {
         path: 'authorize',

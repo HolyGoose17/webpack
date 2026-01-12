@@ -53,6 +53,7 @@ export const api = createApi({
       query: (body) => ({
         url: '/auth/login',
         method: 'POST',
+
         body,
       }),
     }),
